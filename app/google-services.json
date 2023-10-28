@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "804118596601",
+    "project_id": "seg-31-domingo-and-pastor",
+    "storage_bucket": "seg-31-domingo-and-pastor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804118596601:android:30f4859ac1703e936c0b28",
+        "android_client_info": {
+          "package_name": "com.example.tiktalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVvMwOjfWIwkCnzYwt9mCVqM7PzcdN7Mc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
