@@ -22,9 +22,9 @@ class AuthenticationViewModel : ViewModel() {
 
     fun isUserSignedIn() {
         if (auth.currentUser != null) {
-            authenticationStates.value = AuthenticationStates.AlreadySignedIn(true)
+            authenticationStates.postValue(AuthenticationStates.AlreadySignedIn(true))
         } else {
-            authenticationStates.value = AuthenticationStates.AlreadySignedIn(false)
+            authenticationStates.postValue(AuthenticationStates.AlreadySignedIn(false))
         }
     }
 
