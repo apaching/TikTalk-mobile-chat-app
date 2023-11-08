@@ -16,15 +16,28 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.ActivityLoginBinding
+import com.example.tiktalk.state.AuthenticationStates
+import com.example.tiktalk.viewmodel.AuthenticationViewModel
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
+    private lateinit var viewModel : AuthenticationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = AuthenticationViewModel()
+        viewModel.getState().observe(this@LoginActivity) {
+            handleState(it)
+        }
+
+
+        binding.btnLogin.setOnClickListener {
+            viewModel.signIn(binding.etEmail.text.toString(), binding.etPassword.text.toString())
+        }
 
         binding.tvSignUp.apply {
             text = addClickableLink("Don't have an account yet? Sign up", "Sign up") {
@@ -32,6 +45,33 @@ class LoginActivity : AppCompatActivity() {
             }
 
             movementMethod = LinkMovementMethod.getInstance()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.isUserSignedIn()
+    }
+
+    private fun handleState (it : AuthenticationStates) {
+        when(it) {
+            is AuthenticationStates.AlreadySignedIn -> {
+                if (it.alreadySignedIn) {
+                    HomeActivity.launch(this@LoginActivity)
+                    finish()
+                }
+            }
+
+            is AuthenticationStates.SignedIn -> {
+                HomeActivity.launch(this@LoginActivity)
+                finish()
+            }
+
+            is AuthenticationStates.Error -> {
+
+            }
+
+            else -> {}
         }
     }
 
