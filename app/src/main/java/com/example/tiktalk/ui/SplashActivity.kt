@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
             handleState(it)
         }
 
-        Timer().schedule(3000) {
+        Timer().schedule(3500) {
             viewModel.isUserSignedIn()
         }
     }
@@ -36,7 +36,8 @@ class SplashActivity : AppCompatActivity() {
                     HomeActivity.launch(this@SplashActivity)
                     finish()
                 } else {
-                    // Launch LoginActivity
+                    LoginActivity.launch(this@SplashActivity)
+                    finish()
                 }
             }
 
