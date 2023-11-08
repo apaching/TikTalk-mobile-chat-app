@@ -1,6 +1,6 @@
 package com.example.tiktalk.state
 
-sealed class AuthenticationStates {
+sealed class   AuthenticationStates {
 
     data object Default : AuthenticationStates()
     data class AlreadySignedIn (val alreadySignedIn : Boolean) : AuthenticationStates()
