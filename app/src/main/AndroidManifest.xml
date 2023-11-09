@@ -32,7 +32,8 @@
         </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Base.Theme.TikTalk.ActionBar"/>
     </application>
 
 </manifest>
