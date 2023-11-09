@@ -20,6 +20,21 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="logout">Log out</string>
+    <string name="about_me">About Me</string>
+    <string name="about">About</string>
+    <string name="sample_about_user">Duis ultrices consequat tincidunt. Nulla ut magna imperdiet, luctus sem vel, molestie arcu.</string>
+    <string name="sample_name">John Doe</string>
+    <string name="note">Note</string>
+    <string name="sample_note">Duis ultrices consequat tincidunt. Nulla ut magna imperdiet, luctus sem vel, molestie arcu.</string>
+    <string name="edit">Edit Profile</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete">Delete</string>
+    <string name="no_friend_request">No Friend Request</string>
+
+
+
+
+
 
 
 

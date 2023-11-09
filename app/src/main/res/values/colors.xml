@@ -2,9 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#BEBDBD</color>
+    <color name="dark_gray">#344050</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="beige_bg">#F8EFD4</color>
+    <color name="beige">#F8EFD4</color>
+    <color name="beige_2">#DAD8C795</color>
     <color name="blue">#0D1B2E</color>
     <color name="dark_blue">#132743</color>
+    <color name="blue_cv">#1F2F45</color>
+    <color name="blue_button">#204170</color>
     <color name="scarlet">#d7385e</color>
 </resources>

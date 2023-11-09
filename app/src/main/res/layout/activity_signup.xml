@@ -20,7 +20,7 @@
         android:layout_height="750dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="150dp"
-        android:backgroundTint="@color/beige_bg"
+        android:backgroundTint="@color/beige"
         app:cardCornerRadius="70dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_button"
                 android:text="@string/sign_up"
-                android:textColor="@color/beige_bg"
+                android:textColor="@color/beige"
                 android:fontFamily="@font/montserrat_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="160dp"

@@ -16,13 +16,13 @@
     </style>
 
     <style name="ActionBarTitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/beige_bg</item>
+        <item name="android:textColor">@color/beige</item>
         <item name="android:fontFamily">@font/montserrat_semibold</item>
     </style>
 
     <style name="NavTextStyle">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/beige_bg</item>
+        <item name="android:textColor">@color/beige</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
 
     </style>
