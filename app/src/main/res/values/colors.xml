@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="beige_bg">#F8EFD4</color>
+    <color name="blue">#0D1B2E</color>
     <color name="dark_blue">#132743</color>
     <color name="scarlet">#d7385e</color>
 </resources>
