@@ -12,9 +12,9 @@
         android:title="@string/add_friend"
         android:icon="@drawable/baseline_person_add_alt_1_24"/>
     <item
-        android:id="@+id/nav_qr_code"
-        android:title="@string/generate_qr_code"
-        android:icon="@drawable/baseline_qr_code_24"/>
+        android:id="@+id/nav_friend_requests"
+        android:title="@string/friend_requests"
+        android:icon="@drawable/baseline_emoji_people_24"/>
     <item
         android:id="@+id/nav_settings"
         android:title="@string/settings"

@@ -68,7 +68,7 @@ class HomeActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    R.id.nav_qr_code -> Toast.makeText(
+                    R.id.nav_friend_requests -> Toast.makeText(
                         this@HomeActivity,
                         "Item 3 clicked",
                         Toast.LENGTH_SHORT
