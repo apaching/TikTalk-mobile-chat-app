@@ -31,6 +31,22 @@
     <string name="delete">Delete</string>
     <string name="no_friend_request">No Friend Requests</string>
     <string name="friend_requests">Friend Requests</string>
+    <string name="no_friend_request">No Friend Request</string>
+    <string name="friend_requests">Friend Request</string>
+    <string name="sample_name_2">Jane Doe</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>
