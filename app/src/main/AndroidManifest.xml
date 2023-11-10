@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TikTalk"
         tools:targetApi="31">
         <activity
+            android:name=".ui.FriendRequestsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.TestActivity"
             android:exported="false" />
         <activity
@@ -33,7 +36,7 @@
         <activity
             android:name=".ui.HomeActivity"
             android:exported="true"
-            android:theme="@style/Base.Theme.TikTalk.ActionBar"/>
+            android:theme="@style/Base.Theme.TikTalk.ActionBar" />
     </application>
 
 </manifest>
