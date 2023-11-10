@@ -56,4 +56,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
+
+    implementation("com.github.lisawray.groupie:groupie:2.10.1")
 }
