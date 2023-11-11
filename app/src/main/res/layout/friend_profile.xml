@@ -137,4 +137,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancel_request"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_button_cancel_request"
+        android:elevation="20dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/cancel_request"
+        android:textAllCaps="false"
+        android:textColor="@color/beige"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="90dp"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

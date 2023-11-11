@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.tiktalk"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -48,7 +48,7 @@ dependencies {
 
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("com.android.car.ui:car-ui-lib:2.5.1")
+    implementation ("com.android.car.ui:car-ui-lib:2.5.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
