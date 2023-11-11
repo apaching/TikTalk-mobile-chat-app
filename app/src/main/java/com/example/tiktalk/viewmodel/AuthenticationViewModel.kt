@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.example.tiktalk.model.UserInfoModel
 import com.example.tiktalk.state.AuthenticationStates
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -26,6 +30,23 @@ class AuthenticationViewModel : ViewModel() {
         } else {
             authenticationStates.postValue(AuthenticationStates.AlreadySignedIn(false))
         }
+    }
+
+    fun getCurrentUserInfo() {
+        val objectListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue<UserInfoModel>()
+
+                authenticationStates.value = AuthenticationStates.Default(user)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.child("users_list/${auth.currentUser?.uid}/user_information").addListenerForSingleValueEvent(objectListener)
     }
 
     fun signUp(email : String, password : String) {

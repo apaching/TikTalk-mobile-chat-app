@@ -28,5 +28,9 @@
 
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/beige</item>
+    </style>
+
     <style name="Theme.TikTalk.ActionBar" parent="Base.Theme.TikTalk.ActionBar" />
 </resources>

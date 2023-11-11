@@ -12,8 +12,10 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_searchview"
             app:layout_constraintEnd_toEndOf="parent"
+            android:theme="@style/SearchViewStyle"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="20dp"
+            app:queryHint="Search"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ListView
@@ -31,9 +33,9 @@
             android:layout_gravity="center"
             android:scaleY="1.1"
             android:scaleX="1.1"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
             app:spanCount="2"
-            android:layout_margin="15dp"
+            android:layout_margin="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/each_user" />
