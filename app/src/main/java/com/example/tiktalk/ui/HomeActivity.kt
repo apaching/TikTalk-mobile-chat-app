@@ -62,17 +62,12 @@ class HomeActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    R.id.nav_add_friend -> Toast.makeText(
-                        this@HomeActivity,
-                        "Item 2 clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    R.id.nav_add_friend -> {
+                        val intent = Intent(this@HomeActivity, TestActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                    R.id.nav_friend_requests -> Toast.makeText(
-                        this@HomeActivity,
-                        "Item 3 clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    R.id.nav_friend_requests -> FriendRequestsActivity.launch(this@HomeActivity)
 
                     R.id.nav_settings -> Toast.makeText(
                         this@HomeActivity,
@@ -105,3 +100,4 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 }
+

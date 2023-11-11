@@ -2,7 +2,8 @@ package com.example.tiktalk.model
 
 data class FriendModel(
 
-    val uid : String? = null, // this uid refers to the uid of the other person
+    val sender : String? = null,
+    val recipient : String? = null,
     val status : String ? = null
 
 )

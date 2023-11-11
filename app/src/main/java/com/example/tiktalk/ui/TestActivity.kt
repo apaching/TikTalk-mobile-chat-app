@@ -22,11 +22,12 @@ class TestActivity : AppCompatActivity() {
         viewModel = FriendsViewModel()
 
         binding.btn.setOnClickListener {
-            viewModel.sendFriendRequest(auth.currentUser?.uid, binding.et.text.toString())
+            viewModel.sendFriendRequest(auth.currentUser?.uid, "BEmGaNYKszLzD3Dx2woRKIDQVJ22")
         }
 
         binding.btn2.setOnClickListener {
             auth.signOut()
+            finish()
         }
     }
 
