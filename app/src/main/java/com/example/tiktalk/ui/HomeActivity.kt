@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.ActivityHomeBinding
+import com.example.tiktalk.databinding.NavHeaderBinding
 import com.google.android.material.navigation.NavigationView
 
 
