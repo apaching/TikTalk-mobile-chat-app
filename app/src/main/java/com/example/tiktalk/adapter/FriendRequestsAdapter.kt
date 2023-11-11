@@ -34,7 +34,7 @@ class FriendRequestsAdapter(val context : Context, val friendRequestsList : Arra
         }
     }
 
-    override fun getItemCount(): Int = this.friendRequestsList?.size!!
+    override fun getItemCount() : Int = this.friendRequestsList?.size!!
 
     class ViewHolder(val binding : ItemFriendRequestBinding, val context : Context, val viewModel : FriendsViewModel) : RecyclerView.ViewHolder(binding.root) {
 

@@ -1,6 +1,6 @@
 package com.example.tiktalk.viewmodel
 
-import android.util.Log
+import kotlin.collections.toMutableList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +25,8 @@ class FriendsViewModel : ViewModel() {
 
     private var friendRequestsList = ArrayList<FriendModel>()
     private var userInfoList = ArrayList<UserInfoModel>()
+
+    private var childEventListener : ChildEventListener? = null
 
     fun getState() : LiveData<FriendStates> = friendStates
 
@@ -161,5 +163,37 @@ class FriendsViewModel : ViewModel() {
         }
 
         database.child("users_list/$recipientId/friends_list").addListenerForSingleValueEvent(recipientObjectListener)
+    }
+
+    fun performSearch(query : String) {
+        val objectListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val results = mutableListOf<UserInfoModel>()
+
+                if(query.isNotEmpty()) {
+                    for(data in snapshot.children) {
+                        val userInformationSnapshot = data.child("user_information")
+                        val userInfo = userInformationSnapshot.getValue<UserInfoModel>()
+
+                        if (userInfo != null
+                            && userInfo.name!!.contains(query, ignoreCase = true)
+                            && auth.currentUser?.uid != userInfo.uid) {
+
+                            results.add(userInfo)
+                        }
+                    }
+                }
+
+                friendStates.value = FriendStates.SearchFinished(results as ArrayList<UserInfoModel>)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.child("users_list").addListenerForSingleValueEvent(objectListener)
+
     }
 }

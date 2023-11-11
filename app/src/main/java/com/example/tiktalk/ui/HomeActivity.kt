@@ -18,18 +18,31 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.ActivityHomeBinding
+import com.example.tiktalk.databinding.NavHeaderBinding
+import com.example.tiktalk.state.AuthenticationStates
+import com.example.tiktalk.viewmodel.AuthenticationViewModel
 import com.google.android.material.navigation.NavigationView
 
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var binding : ActivityHomeBinding
+    private lateinit var viewModel : AuthenticationViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = AuthenticationViewModel()
+        viewModel.getState().observe(this@HomeActivity) {
+            handleState(it)
+        }
+
+        // Get user info to be displayed sa information upon clicking burger menu
+        viewModel.getCurrentUserInfo()
 
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -38,7 +51,6 @@ class HomeActivity : AppCompatActivity() {
         val customTitle = TextView(this@HomeActivity)
         customTitle.text = "Chats"
         customTitle.setTextAppearance(R.style.ActionBarTitleText)
-
 
         // Set custom view for the action bar
         supportActionBar?.customView = customTitle
@@ -52,20 +64,12 @@ class HomeActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
         binding.navView.setNavigationItemSelectedListener {
 
                 when (it.itemId) {
-                    R.id.nav_profile -> Toast.makeText(
-                        this@HomeActivity,
-                        "Item 1 clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    R.id.nav_profile -> UserProfileActivity.launch(this@HomeActivity)
 
-                    R.id.nav_add_friend -> {
-                        val intent = Intent(this@HomeActivity, TestActivity::class.java)
-                        startActivity(intent)
-                    }
+                    R.id.nav_add_friend -> AddFriendActivity.launch(this@HomeActivity)
 
                     R.id.nav_friend_requests -> FriendRequestsActivity.launch(this@HomeActivity)
 
@@ -77,13 +81,28 @@ class HomeActivity : AppCompatActivity() {
 
                     else -> false
                 }
-
                 true
+        }
 
-            }
-
+        binding.btnLogout.setOnClickListener {
+            viewModel.signOut()
+        }
     }
 
+    private fun handleState (it : AuthenticationStates) {
+        when(it) {
+            is AuthenticationStates.Default -> {
+                binding.navView.getHeaderView(0).findViewById<TextView>(R.id.tv_username).text = it.user?.name.toString()
+            }
+
+            is AuthenticationStates.SignedOut -> {
+                LoginActivity.launch(this@HomeActivity)
+                finish()
+            }
+
+            else -> {}
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
