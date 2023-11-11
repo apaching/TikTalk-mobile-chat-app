@@ -32,19 +32,8 @@
     <string name="no_friend_request">No Friend Requests</string>
     <string name="friend_requests">Friend Requests</string>>
     <string name="sample_name_2">Jane Doe</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name="cancel_request">Cancel Request</string>
+    <string name="type_a_message">Type your message</string>
 
 
 </resources>
