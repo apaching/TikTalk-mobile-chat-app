@@ -21,18 +21,22 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/car_ui_icon_arrow_back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                android:background="@color/transparent"
+                android:layout_marginStart="25dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_chat"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="150dp"
-                android:padding="20dp"
+                android:padding="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
