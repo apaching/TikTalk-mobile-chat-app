@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -73,11 +74,7 @@ class HomeActivity : AppCompatActivity() {
 
                     R.id.nav_friend_requests -> FriendRequestsActivity.launch(this@HomeActivity)
 
-                    R.id.nav_settings -> Toast.makeText(
-                        this@HomeActivity,
-                        "Item 2 clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    R.id.nav_settings -> ChatActivity.launch(this@HomeActivity)
 
                     else -> false
                 }
