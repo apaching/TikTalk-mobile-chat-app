@@ -7,6 +7,11 @@
         android:id="@+id/nav_profile"
         android:title="@string/profile"
         android:icon="@drawable/baseline_person_24"/>
+
+    <item android:id="@+id/nav_friendList"
+        android:title="@string/friends_list"
+        android:icon="@drawable/baseline_people_alt_24"/>
+
     <item
         android:id="@+id/nav_add_friend"
         android:title="@string/add_friend"

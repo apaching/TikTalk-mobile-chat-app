@@ -7,13 +7,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
-import android.widget.ToggleButton
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -69,6 +64,8 @@ class HomeActivity : AppCompatActivity() {
 
                 when (it.itemId) {
                     R.id.nav_profile -> UserProfileActivity.launch(this@HomeActivity)
+
+                    R.id.nav_friendList -> UserFriendsListActivity.launch(this@HomeActivity)
 
                     R.id.nav_add_friend -> AddFriendActivity.launch(this@HomeActivity)
 

@@ -20,17 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="70dp"
-                android:src="@drawable/baseline_arrow_back_ios_24"
-                android:background="@color/transparent"
-                android:layout_marginStart="25dp"/>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_chat"
                 android:layout_width="match_parent"

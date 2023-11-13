@@ -35,5 +35,8 @@
     <string name="cancel_request">Cancel Request</string>
     <string name="type_a_message">Type your message</string>
     <string name="back">Back</string>
+    <string name="friends_list">Friends List</string>
+    <string name="search">Search</string>
+    <string name="no_friends">No Friends</string>
 
 </resources>

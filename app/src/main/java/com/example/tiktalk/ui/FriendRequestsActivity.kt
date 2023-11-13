@@ -5,9 +5,13 @@ import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tiktalk.R
 import com.example.tiktalk.adapter.FriendRequestsAdapter
 import com.example.tiktalk.databinding.ActivityFriendRequestBinding
 import com.example.tiktalk.state.FriendStates
@@ -24,6 +28,18 @@ class FriendRequestsActivity : AppCompatActivity() {
         binding = ActivityFriendRequestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val customTitle = TextView(this@FriendRequestsActivity)
+        customTitle.text = getString(R.string.friend_requests)
+        customTitle.setTextAppearance(R.style.ActionBarTitleText)
+
+        supportActionBar?.customView = customTitle
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
+
+
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = true
@@ -35,6 +51,15 @@ class FriendRequestsActivity : AppCompatActivity() {
         }
 
         viewModel.getFriendRequestList()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                HomeActivity.launch(this@FriendRequestsActivity)
+            }
+        }
+        return true
     }
 
     private fun handleState(it : FriendStates) {

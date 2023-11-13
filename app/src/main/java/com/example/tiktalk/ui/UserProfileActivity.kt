@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.ActivityLoginBinding
 import com.example.tiktalk.databinding.ActivityProfileBinding
@@ -19,6 +22,29 @@ class UserProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        val customTitle = TextView(this@UserProfileActivity)
+        customTitle.text = getString(R.string.sample_name) //user name
+        customTitle.setTextAppearance(R.style.ActionBarTitleText)
+
+        supportActionBar?.customView = customTitle
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
+
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                HomeActivity.launch(this@UserProfileActivity)
+            }
+        }
+        return true
 
         viewModel = AuthenticationViewModel()
         viewModel.getState().observe(this@UserProfileActivity) {
@@ -37,6 +63,7 @@ class UserProfileActivity : AppCompatActivity() {
 
             else -> {}
         }
+
     }
 
     companion object {
