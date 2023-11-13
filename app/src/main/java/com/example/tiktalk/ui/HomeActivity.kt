@@ -73,11 +73,7 @@ class HomeActivity : AppCompatActivity() {
 
                     R.id.nav_friend_requests -> FriendRequestsActivity.launch(this@HomeActivity)
 
-                    R.id.nav_settings -> Toast.makeText(
-                        this@HomeActivity,
-                        "Item 2 clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    R.id.nav_settings -> TestActivity.launch(this@HomeActivity)
 
                     else -> false
                 }
