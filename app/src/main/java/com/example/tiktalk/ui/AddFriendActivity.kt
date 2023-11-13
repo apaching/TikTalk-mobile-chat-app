@@ -5,9 +5,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.SearchView
+import android.widget.TextView
+import androidx.appcompat.app.ActionBar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tiktalk.R
 import com.example.tiktalk.adapter.FriendSearchAdapter
 import com.example.tiktalk.databinding.ActivityAddFriendBinding
 import com.example.tiktalk.state.FriendStates
@@ -23,6 +29,17 @@ class AddFriendActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddFriendBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val customTitle = TextView(this@AddFriendActivity)
+        customTitle.text = getString(R.string.search)
+        customTitle.setTextAppearance(R.style.ActionBarTitleText)
+
+        supportActionBar?.customView = customTitle
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
 
         viewModel = FriendsViewModel()
         viewModel.getState().observe(this@AddFriendActivity) {
@@ -52,6 +69,15 @@ class AddFriendActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                HomeActivity.launch(this@AddFriendActivity)
+            }
+        }
+        return true
     }
 
     private fun handleState(it : FriendStates) {
