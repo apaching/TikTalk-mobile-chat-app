@@ -1,11 +1,13 @@
 package com.example.tiktalk.viewmodel
 
+import android.util.Log
 import kotlin.collections.toMutableList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tiktalk.model.FriendModel
 import com.example.tiktalk.model.UserInfoModel
+import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.state.FriendStates
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
@@ -24,22 +26,39 @@ class FriendsViewModel : ViewModel() {
     private var auth = Firebase.auth
 
     private var friendRequestsList = ArrayList<FriendModel>()
-    private var userInfoList = ArrayList<UserInfoModel>()
 
-    private var childEventListener : ChildEventListener? = null
+
 
     fun getState() : LiveData<FriendStates> = friendStates
 
+    // Function for sending a friend request to another user
     fun sendFriendRequest(senderId : String?, recipientId : String?) {
         val senderObjectListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val friendModel = FriendModel (
-                    senderId,
-                    recipientId,
-                    "pending"
-                )
+                var isUserAlreadyInList = false
 
-                database.child("users_list/$senderId/friends_list").push().setValue(friendModel)
+                for (data in snapshot.children) {
+                    if (senderId == data.key) {
+                        val friendModel = FriendModel(
+                            senderId,
+                            recipientId,
+                            "pending"
+                        )
+                        database.child("users_list/$senderId/friends_list/$recipientId").setValue(friendModel)
+                        isUserAlreadyInList = true
+                        break
+                    }
+                }
+
+                if (!isUserAlreadyInList) {
+                    val friendModel = FriendModel(
+                        senderId,
+                        recipientId,
+                        "pending"
+                    )
+
+                    database.child("users_list/$senderId/friends_list/$recipientId").setValue(friendModel)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -51,13 +70,31 @@ class FriendsViewModel : ViewModel() {
 
         val recipientObjectListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val friendModel = FriendModel (
-                    senderId,
-                    recipientId,
-                    "pending"
-                )
+                var isUserAlreadyInList = false
 
-                database.child("users_list/$recipientId/friends_list").push().setValue(friendModel)
+                for (data in snapshot.children) {
+                    if (senderId == data.key) {
+                        val friendModel = FriendModel(
+                            senderId,
+                            recipientId,
+                            "pending"
+                        )
+
+                        database.child("users_list/$recipientId/friends_list/$senderId").setValue(friendModel)
+                        isUserAlreadyInList = true
+                        break
+                    }
+                }
+
+                if (!isUserAlreadyInList) {
+                    val friendModel = FriendModel(
+                        senderId,
+                        recipientId,
+                        "pending"
+                    )
+
+                    database.child("users_list/$recipientId/friends_list/$senderId").setValue(friendModel)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -100,7 +137,8 @@ class FriendsViewModel : ViewModel() {
 
         }
 
-        database.child("users_list/${auth.currentUser?.uid}/friends_list").addListenerForSingleValueEvent(listListener)
+        database.child("users_list/${auth.currentUser?.uid}/friends_list").addValueEventListener(listListener)
+
     }
 
     fun updateFriendRequestStatus (senderId : String?, recipientId: String?, status : String?) {
@@ -120,9 +158,6 @@ class FriendsViewModel : ViewModel() {
                         )
 
                         database.child("users_list/$senderId/friends_list/$entryId").setValue(updatedFriend)
-                            .addOnSuccessListener {
-                                getFriendRequestList()
-                            }
                     }
                 }
             }
@@ -150,9 +185,6 @@ class FriendsViewModel : ViewModel() {
                         )
 
                         database.child("users_list/$recipientId/friends_list/$entryId").setValue(updatedFriend)
-                            .addOnSuccessListener {
-                                getFriendRequestList()
-                            }
                     }
                 }
             }
@@ -193,7 +225,43 @@ class FriendsViewModel : ViewModel() {
 
         }
 
-        database.child("users_list").addListenerForSingleValueEvent(objectListener)
+        database.child("users_list").addValueEventListener(objectListener)
 
+    }
+
+    fun getFriendUserInfo(userInfoModel : UserInfoModel?) {
+        friendStates.value = FriendStates.InformationRetrieved(userInfoModel)
+    }
+
+    fun checkFriendshipStatus(userInfoModel : UserInfoModel?) {
+        val objectListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var isUserAlreadyInList = false
+
+                for(data in snapshot.children) {
+                    if(userInfoModel?.uid == data.key) {
+                        val status = data.child("status").getValue(String::class.java)
+                        val sender = data.child("sender").getValue(String::class.java)
+
+                        friendStates.value = FriendStates.FriendshipStatusRetrieved(status, sender)
+                        isUserAlreadyInList = true
+                        Log.d("TEST-FriendsViewModel", "User existing")
+                        break
+                    }
+                }
+
+                if(!isUserAlreadyInList) {
+                    Log.d("TEST-FriendsViewModel", "User not existing")
+                    friendStates.value = FriendStates.FriendshipStatusRetrieved(null, null)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.child("users_list/${auth.currentUser?.uid}/friends_list").addValueEventListener(objectListener)
     }
 }

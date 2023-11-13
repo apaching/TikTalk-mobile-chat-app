@@ -10,15 +10,19 @@ import androidx.appcompat.app.ActionBar
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.ActivityLoginBinding
 import com.example.tiktalk.databinding.ActivityProfileBinding
+import com.example.tiktalk.state.AuthenticationStates
+import com.example.tiktalk.viewmodel.AuthenticationViewModel
 
 class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityProfileBinding
+    private lateinit var viewModel : AuthenticationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         val customTitle = TextView(this@UserProfileActivity)
         customTitle.text = getString(R.string.sample_name) //user name
@@ -41,6 +45,25 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
         return true
+
+        viewModel = AuthenticationViewModel()
+        viewModel.getState().observe(this@UserProfileActivity) {
+            handleState(it)
+        }
+
+        viewModel.getCurrentUserInfo()
+
+    }
+
+    private fun handleState(it : AuthenticationStates) {
+        when(it) {
+            is AuthenticationStates.Default -> {
+                binding.tvUsername.text = it.user?.name
+            }
+
+            else -> {}
+        }
+
     }
 
     companion object {

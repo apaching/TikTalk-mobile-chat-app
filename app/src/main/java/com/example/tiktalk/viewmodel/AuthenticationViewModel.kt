@@ -3,6 +3,7 @@ package com.example.tiktalk.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.tiktalk.R
 import com.example.tiktalk.model.UserInfoModel
 import com.example.tiktalk.state.AuthenticationStates
 import com.google.firebase.auth.ktx.auth
@@ -88,6 +89,7 @@ class AuthenticationViewModel : ViewModel() {
             uid,
             name,
             email,
+            null,
             null,
         )
 
