@@ -78,7 +78,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_about_friend"
+                android:id="@+id/tv_about_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_about_user"
@@ -91,32 +91,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_1" />
 
-            <TextView
-                android:id="@+id/tv_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/note"
-                android:textAllCaps="true"
-                android:textColor="@color/beige"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/montserrat_semibold"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_about_friend" />
-
-            <TextView
-                android:id="@+id/tv_note_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sample_note"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/beige_2"
-                android:fontFamily="@font/montserrat_regular"
-                android:textSize="13sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

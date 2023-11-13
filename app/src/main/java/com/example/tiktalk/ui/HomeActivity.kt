@@ -76,6 +76,7 @@ class HomeActivity : AppCompatActivity() {
 
                     R.id.nav_settings -> ChatActivity.launch(this@HomeActivity)
 
+
                     else -> false
                 }
                 true
