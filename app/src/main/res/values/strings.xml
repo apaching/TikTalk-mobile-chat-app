@@ -34,5 +34,6 @@
     <string name="sample_name_2">Jane Doe</string>
     <string name="cancel_request">Cancel Request</string>
     <string name="type_a_message">Type your message</string>
+    <string name="back">Back</string>
 
 </resources>
