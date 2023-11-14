@@ -3,7 +3,10 @@ package com.example.tiktalk.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.FriendProfileBinding
 import com.example.tiktalk.model.UserInfoModel
@@ -29,6 +32,19 @@ class FriendProfileActivity : AppCompatActivity() {
         binding = FriendProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        val customTitle = TextView(this@FriendProfileActivity)
+        customTitle.text = getString(R.string.search)
+        customTitle.setTextAppearance(R.style.ActionBarTitleText)
+
+        supportActionBar?.customView = customTitle
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
+
+
         viewModel = FriendsViewModel()
         viewModel.getState().observe(this@FriendProfileActivity) {
             handleState(it)
@@ -45,6 +61,15 @@ class FriendProfileActivity : AppCompatActivity() {
         binding.btnCancelRequest.setOnClickListener {
             viewModel.updateFriendRequestStatus(auth.currentUser?.uid, userInfoModel?.uid, "not_friend")
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                HomeActivity.launch(this@FriendProfileActivity)
+            }
+        }
+        return true
     }
 
     private fun handleState(it : FriendStates) {

@@ -36,6 +36,7 @@ class SettingsActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 HomeActivity.launch(this@SettingsActivity)
+                finish()
             }
         }
         return true

@@ -57,6 +57,7 @@ class FriendRequestsActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 HomeActivity.launch(this@FriendRequestsActivity)
+                finish()
             }
         }
         return true
