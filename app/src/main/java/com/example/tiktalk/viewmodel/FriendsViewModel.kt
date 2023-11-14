@@ -26,6 +26,7 @@ class FriendsViewModel : ViewModel() {
     private var auth = Firebase.auth
 
     private var friendRequestsList = ArrayList<FriendModel>()
+    private var friendsList = ArrayList<String>()
 
 
 
@@ -109,7 +110,7 @@ class FriendsViewModel : ViewModel() {
     }
 
     // Gets the list of friend requests of the user
-    fun getFriendRequestList () {
+    fun getFriendRequestList() {
         val listListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 friendRequestsList.clear()
@@ -128,7 +129,7 @@ class FriendsViewModel : ViewModel() {
                     }
                 }
 
-                friendStates.value = FriendStates.Default(friendRequestsList)
+                friendStates.value = FriendStates.FriendRequestsRetrieved(friendRequestsList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -140,6 +141,30 @@ class FriendsViewModel : ViewModel() {
         database.child("users_list/${auth.currentUser?.uid}/friends_list").addValueEventListener(listListener)
 
     }
+
+    fun getFriendsList() {
+        val listListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (data in snapshot.children) {
+                    val status = data.child("status").getValue(String::class.java)
+
+                    if(status == "friend") {
+                        friendsList.add(data.key.toString())
+
+                    }
+                }
+
+                friendStates.value = FriendStates.FriendsRetrieved(friendsList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        database.child("users_list/${auth.currentUser?.uid}/friends_list").addValueEventListener(listListener)
+    }
+
 
     fun updateFriendRequestStatus (senderId : String?, recipientId: String?, status : String?) {
         val senderObjectListener = object : ValueEventListener {
