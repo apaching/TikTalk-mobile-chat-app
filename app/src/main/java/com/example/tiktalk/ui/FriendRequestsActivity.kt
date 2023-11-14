@@ -65,7 +65,7 @@ class FriendRequestsActivity : AppCompatActivity() {
 
     private fun handleState(it : FriendStates) {
         when(it) {
-            is FriendStates.Default -> {
+            is FriendStates.FriendRequestsRetrieved -> {
                 if(it.list.isEmpty()) {
                     binding.tvNoFriendRequest.visibility = View.VISIBLE
                     binding.rvFriendRequests.visibility = View.GONE

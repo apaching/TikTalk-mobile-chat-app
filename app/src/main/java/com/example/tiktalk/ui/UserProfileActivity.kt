@@ -42,6 +42,12 @@ class UserProfileActivity : AppCompatActivity() {
 
         viewModel.getCurrentUserInfo()
 
+        viewModel = AuthenticationViewModel()
+        viewModel.getState().observe(this@UserProfileActivity) {
+            handleState(it)
+        }
+
+        viewModel.getCurrentUserInfo()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -52,8 +58,6 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
         return true
-
-    }
 
     private fun handleState(it : AuthenticationStates) {
         when(it) {
