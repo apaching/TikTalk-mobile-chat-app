@@ -36,6 +36,7 @@ class UserFriendsListActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 HomeActivity.launch(this@UserFriendsListActivity)
+                finish()
             }
         }
         return true

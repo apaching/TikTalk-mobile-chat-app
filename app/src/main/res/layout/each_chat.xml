@@ -5,11 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:layout_gravity="center_horizontal"
+    android:background="@drawable/bg_each_chat_outline"
     android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/ll"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
@@ -34,17 +35,36 @@
             android:paddingEnd="10dp"
             android:textSize="20sp"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/beige"
             android:fontFamily="@font/montserrat_regular"/>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_close_24"
-            android:background="@color/transparent"/>
-
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_preview_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/sample_note"
+        android:maxWidth="200dp"
+        android:maxHeight="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="30dp"/>
+
+    <TextView
+        android:id="@+id/tv_timestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/sample_timestamp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_preview_message"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="45dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

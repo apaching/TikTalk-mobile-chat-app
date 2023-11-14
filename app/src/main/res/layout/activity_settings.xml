@@ -4,6 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SettingsActivity">
+    tools:context=".ui.SettingsActivity"
+    android:background="@color/blue">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_changePassword"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_each_chat_outline"
+        android:text="@string/change_password"
+        android:gravity="center_vertical"
+        android:paddingStart="100dp"
+        android:textColor="@color/beige"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textSize="17sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_lock_open_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="23dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

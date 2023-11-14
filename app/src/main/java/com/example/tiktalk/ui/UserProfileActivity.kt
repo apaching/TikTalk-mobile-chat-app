@@ -35,6 +35,12 @@ class UserProfileActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
 
+        viewModel = AuthenticationViewModel()
+        viewModel.getState().observe(this@UserProfileActivity) {
+            handleState(it)
+        }
+
+        viewModel.getCurrentUserInfo()
 
     }
 
@@ -42,16 +48,10 @@ class UserProfileActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 HomeActivity.launch(this@UserProfileActivity)
+                finish()
             }
         }
         return true
-
-        viewModel = AuthenticationViewModel()
-        viewModel.getState().observe(this@UserProfileActivity) {
-            handleState(it)
-        }
-
-        viewModel.getCurrentUserInfo()
 
     }
 

@@ -11,7 +11,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="20dp"
         tools:context=".ui.HomeActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_add_friend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleY="1.1"
+            android:scaleX="1.1"
+            app:spanCount="2"
+            android:layout_margin="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

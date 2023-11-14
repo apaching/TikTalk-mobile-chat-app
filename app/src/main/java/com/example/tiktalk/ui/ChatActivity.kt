@@ -58,6 +58,7 @@ class ChatActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 HomeActivity.launch(this@ChatActivity)
+                finish()
             }
         }
         return true
