@@ -36,6 +36,12 @@ class UserProfileActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
 
 
+        viewModel = AuthenticationViewModel()
+        viewModel.getState().observe(this@UserProfileActivity) {
+            handleState(it)
+        }
+
+        viewModel.getCurrentUserInfo()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -44,15 +50,8 @@ class UserProfileActivity : AppCompatActivity() {
                 HomeActivity.launch(this@UserProfileActivity)
             }
         }
+
         return true
-
-        viewModel = AuthenticationViewModel()
-        viewModel.getState().observe(this@UserProfileActivity) {
-            handleState(it)
-        }
-
-        viewModel.getCurrentUserInfo()
-
     }
 
     private fun handleState(it : AuthenticationStates) {

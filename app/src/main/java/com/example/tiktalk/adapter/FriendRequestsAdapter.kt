@@ -65,11 +65,11 @@ class FriendRequestsAdapter(val context : Context, val friendRequestsList : Arra
 
                         if (senderId == friend.sender && recipientId == friend.recipient) {
                             binding.btnConfirm.setOnClickListener {
-                                viewModel.updateFriendRequestStatus(senderId, recipientId, "accepted")
+                                viewModel.updateFriendRequestStatus(senderId, recipientId, "friend")
                             }
 
                             binding.btnDelete.setOnClickListener {
-                                viewModel.updateFriendRequestStatus(senderId, recipientId, "declined")
+                                viewModel.updateFriendRequestStatus(senderId, recipientId, "not_friend")
                             }
                         }
                     }
