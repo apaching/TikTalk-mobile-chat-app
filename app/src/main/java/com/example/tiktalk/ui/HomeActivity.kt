@@ -3,6 +3,7 @@ package com.example.tiktalk.ui
 import android.app.Activity
 import androidx.appcompat.app.ActionBar
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import com.example.tiktalk.databinding.ActivityHomeBinding
 import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.viewmodel.AuthenticationViewModel
 import com.example.tiktalk.viewmodel.ChatViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class HomeActivity : AppCompatActivity() {
@@ -92,6 +94,11 @@ class HomeActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener {
             authenticationViewModel.signOut()
         }
+
+        val fab : FloatingActionButton = findViewById(R.id.fab_to_friends_list)
+        val drawable = ContextCompat.getDrawable(this, R.drawable.edit_square_24px)
+        drawable?.mutate()?.setColorFilter(ContextCompat.getColor(this, R.color.beige), PorterDuff.Mode.SRC_ATOP);
+        fab.setImageDrawable(drawable);
 
         binding.fabToFriendsList.setOnClickListener {
             UserFriendsListActivity.launch(this@HomeActivity)
