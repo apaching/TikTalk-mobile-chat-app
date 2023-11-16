@@ -261,6 +261,8 @@ class FriendsViewModel : ViewModel() {
         friendStates.value = FriendStates.InformationRetrieved(userInfoModel)
     }
 
+
+
     fun checkFriendshipStatus(userInfoModel : UserInfoModel?) {
         val objectListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

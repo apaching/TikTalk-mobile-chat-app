@@ -1,31 +1,25 @@
 package com.example.tiktalk.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
-import android.widget.ToggleButton
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tiktalk.R
 import com.example.tiktalk.adapter.ChatAdapter
-import com.example.tiktalk.adapter.ChatStates
+import com.example.tiktalk.state.ChatStates
 import com.example.tiktalk.databinding.ActivityChatBinding
-import com.example.tiktalk.databinding.ToolbarTitleBinding
 import com.example.tiktalk.model.MessageModel
+import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.viewmodel.ChatViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -33,8 +27,9 @@ import java.util.Locale
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding :  ActivityChatBinding
-    private lateinit var viewModel : ChatViewModel
+    private lateinit var chatViewModel : ChatViewModel
     private lateinit var adapter : ChatAdapter
+    private lateinit var customTitle : TextView
 
     private var friendUid : String? = null
 
@@ -45,19 +40,27 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ChatViewModel()
-        viewModel.getState().observe(this@ChatActivity) {
+        friendUid = intent.getStringExtra("friend_uid")
+
+        chatViewModel = ChatViewModel()
+        chatViewModel.getState().observe(this@ChatActivity) {
             handleState(it)
         }
 
-        friendUid = intent.getStringExtra("friend_uid")
+        chatViewModel.getUserInfo(friendUid.toString())
 
-        viewModel.newMessage(friendUid.toString())
-        viewModel.retrieveConversation(friendUid.toString())
+        chatViewModel.newMessage(friendUid.toString())
+        chatViewModel.retrieveConversation(friendUid.toString())
+
+        chatViewModel.scrollToBottomEvent.observe(this, Observer {
+            // Scroll to the bottom after adding a new message
+            binding.rvChat.smoothScrollToPosition(adapter.itemCount - 1)
+        })
+
 
         binding.rvChat.layoutManager = LinearLayoutManager(this)
 
-        val customTitle = TextView(this@ChatActivity)
+        customTitle = TextView(this@ChatActivity)
         customTitle.text = getString(R.string.sample_name_2) //another user name
         customTitle.setTextAppearance(R.style.ActionBarTitleText)
 
@@ -81,6 +84,9 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
 
         binding.btnSend.setOnClickListener {
+            // Generate unix timestamp
+            val unixTimestamp : Long = System.currentTimeMillis()
+
             val senderUid = auth.currentUser?.uid
             // Get message
             val message = binding.etMessage.text.toString()
@@ -96,11 +102,9 @@ class ChatActivity : AppCompatActivity() {
                 timeStamp
             )
 
-            viewModel.sendMessage(messageModel, friendUid.toString())
+            chatViewModel.sendMessage(messageModel, friendUid.toString(), unixTimestamp)
 
             binding.etMessage.text.clear()
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding.etMessage.windowToken, 0)
         }
 
     }
@@ -111,6 +115,18 @@ class ChatActivity : AppCompatActivity() {
                 adapter = ChatAdapter(this@ChatActivity, it.data)
                 binding.rvChat.adapter = adapter
             }
+
+            is ChatStates.InformationRetrieved -> {
+                customTitle.text = it.data?.name.toString()
+            }
+
+            else -> {}
+        }
+    }
+
+    private fun handleState(it : AuthenticationStates) {
+        when(it) {
+
 
             else -> {}
         }
