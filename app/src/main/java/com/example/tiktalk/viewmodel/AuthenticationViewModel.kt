@@ -55,7 +55,7 @@ class AuthenticationViewModel : ViewModel() {
         Firebase.auth.sendPasswordResetEmail(emailAddress)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    authenticationStates.value = AuthenticationStates.PasswordUpdated
+                    authenticationStates.value = AuthenticationStates.ResetPasswordEmailSent
                 }else {
                     authenticationStates.value = AuthenticationStates.Error
                 }
