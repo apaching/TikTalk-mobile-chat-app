@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -65,8 +66,34 @@ class ChatAdapter(val context : Context, val messageList : ArrayList<MessageMode
         fun bind(message : MessageModel, position: Int) {
             if (binding is ItemContainerSentMessageBinding) {
                 binding.tvMessage.text = message.message
+
+                var isVisible = false
+                binding.tvMessage.setOnClickListener {
+                    if (!isVisible) {
+                        binding.tvTimestamp.visibility = View.VISIBLE
+                        binding.tvTimestamp.text = message.timeStamp
+                        isVisible = true
+                    } else {
+                        binding.tvTimestamp.visibility = View.GONE
+                        isVisible = false
+                    }
+
+                }
             } else if (binding is ItemContainerReceivedMessageBinding) {
                 binding.tvMessage.text = message.message
+
+                var isVisible = false
+                binding.tvMessage.setOnClickListener {
+                    if (!isVisible) {
+                        binding.tvTimestamp.visibility = View.VISIBLE
+                        binding.tvTimestamp.text = message.timeStamp
+                        isVisible = true
+                    } else {
+                        binding.tvTimestamp.visibility = View.GONE
+                        isVisible = false
+                    }
+
+                }
             }
         }
     }

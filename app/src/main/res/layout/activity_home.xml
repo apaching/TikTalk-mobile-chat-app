@@ -25,9 +25,9 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_add_friend"
+            android:id="@+id/rv_chat_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:scaleY="1.1"
             android:scaleX="1.1"

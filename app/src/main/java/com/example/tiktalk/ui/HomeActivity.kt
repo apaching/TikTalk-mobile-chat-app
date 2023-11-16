@@ -12,11 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tiktalk.R
+import com.example.tiktalk.adapter.ChatStates
+import com.example.tiktalk.adapter.RecentChatsAdapter
 import com.example.tiktalk.databinding.ActivityHomeBinding
 import com.example.tiktalk.databinding.NavHeaderBinding
 import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.viewmodel.AuthenticationViewModel
+import com.example.tiktalk.viewmodel.ChatViewModel
 import com.google.android.material.navigation.NavigationView
 
 
@@ -24,7 +28,11 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var binding : ActivityHomeBinding
-    private lateinit var viewModel : AuthenticationViewModel
+
+    private lateinit var authenticationViewModel : AuthenticationViewModel
+    private lateinit var chatViewModel : ChatViewModel
+
+    private lateinit var adapter : RecentChatsAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,13 +40,18 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = AuthenticationViewModel()
-        viewModel.getState().observe(this@HomeActivity) {
+        authenticationViewModel = AuthenticationViewModel()
+        authenticationViewModel.getState().observe(this@HomeActivity) {
             handleState(it)
         }
-
         // Get user info to be displayed sa information upon clicking burger menu
-        viewModel.getCurrentUserInfo()
+        authenticationViewModel.getCurrentUserInfo()
+
+        chatViewModel = ChatViewModel()
+        chatViewModel.getState().observe(this@HomeActivity) {
+            handleState(it)
+        }
+        chatViewModel.retrieveRecentChats()
 
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -80,12 +93,11 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.btnLogout.setOnClickListener {
-            viewModel.signOut()
+            authenticationViewModel.signOut()
         }
 
         binding.fabToFriendsList.setOnClickListener {
             UserFriendsListActivity.launch(this@HomeActivity)
-            finish()
         }
     }
 
@@ -98,6 +110,21 @@ class HomeActivity : AppCompatActivity() {
             is AuthenticationStates.SignedOut -> {
                 LoginActivity.launch(this@HomeActivity)
                 finish()
+            }
+
+            else -> {}
+        }
+    }
+
+    private fun handleState (it : ChatStates) {
+        when(it) {
+            is ChatStates.Default -> {
+                val layoutManager = LinearLayoutManager(this)
+                binding.rvChatList.layoutManager = layoutManager
+
+
+                adapter = RecentChatsAdapter(this@HomeActivity, it.data)
+                binding.rvChatList.adapter = adapter
             }
 
             else -> {}

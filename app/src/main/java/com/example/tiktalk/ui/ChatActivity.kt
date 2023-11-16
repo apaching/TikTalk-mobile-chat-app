@@ -36,6 +36,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var viewModel : ChatViewModel
     private lateinit var adapter : ChatAdapter
 
+    private var friendUid : String? = null
+
     private var auth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,11 @@ class ChatActivity : AppCompatActivity() {
         viewModel.getState().observe(this@ChatActivity) {
             handleState(it)
         }
+
+        friendUid = intent.getStringExtra("friend_uid")
+
+        viewModel.newMessage(friendUid.toString())
+        viewModel.retrieveConversation(friendUid.toString())
 
         binding.rvChat.layoutManager = LinearLayoutManager(this)
 
@@ -89,7 +96,7 @@ class ChatActivity : AppCompatActivity() {
                 timeStamp
             )
 
-            viewModel.sendMessage(messageModel)
+            viewModel.sendMessage(messageModel, friendUid.toString())
 
             binding.etMessage.text.clear()
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -101,7 +108,7 @@ class ChatActivity : AppCompatActivity() {
     private fun handleState(it : ChatStates) {
         when(it) {
             is ChatStates.ChatAdded -> {
-                val adapter = ChatAdapter(this@ChatActivity, it.data)
+                adapter = ChatAdapter(this@ChatActivity, it.data)
                 binding.rvChat.adapter = adapter
             }
 

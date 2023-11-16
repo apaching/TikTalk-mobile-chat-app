@@ -10,7 +10,9 @@ import com.example.tiktalk.databinding.EachUserBinding
 import com.example.tiktalk.databinding.ItemFriendRequestBinding
 import com.example.tiktalk.model.FriendModel
 import com.example.tiktalk.model.UserInfoModel
+import com.example.tiktalk.ui.ChatActivity
 import com.example.tiktalk.ui.FriendProfileActivity
+import com.example.tiktalk.viewmodel.ChatViewModel
 import com.example.tiktalk.viewmodel.FriendsViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
@@ -44,6 +46,12 @@ class FriendsAdapter(val context : Context, val friendsList : ArrayList<String>?
                     val userInfoModel = snapshot.getValue<UserInfoModel>()
 
                     binding.tvUsername.text = userInfoModel?.name.toString()
+
+                    binding.btnAddMessage.setOnClickListener {
+                        val intent = Intent(context, ChatActivity::class.java)
+                        intent.putExtra("friend_uid", friendUid)
+                        context.startActivity(intent)
+                    }
 
                     binding.ll.setOnClickListener {
                         val intent = Intent(context, FriendProfileActivity::class.java)
