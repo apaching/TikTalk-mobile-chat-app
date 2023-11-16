@@ -40,7 +40,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     private fun handleState(it  :AuthenticationStates){
         when(it){
-            is AuthenticationStates.PasswordUpdated -> {
+            is AuthenticationStates.ResetPasswordEmailSent -> {
                 setContentView(R.layout.change_password_message_screen)
                 val button = findViewById<Button>(R.id.btn_changePassword)
                 button.setOnClickListener {
