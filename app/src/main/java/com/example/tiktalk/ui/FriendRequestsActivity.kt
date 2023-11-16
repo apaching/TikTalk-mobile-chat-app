@@ -56,7 +56,6 @@ class FriendRequestsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                HomeActivity.launch(this@FriendRequestsActivity)
                 finish()
             }
         }
