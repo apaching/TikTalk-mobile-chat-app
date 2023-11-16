@@ -4,12 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.Button
-import androidx.lifecycle.ViewModel
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.ActivityChangePasswordBinding
-import com.example.tiktalk.databinding.ChangePasswordMessageScreenBinding
 import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.viewmodel.AuthenticationViewModel
 
@@ -43,7 +40,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     private fun handleState(it  :AuthenticationStates){
         when(it){
-            is AuthenticationStates.PasswordUpdate -> {
+            is AuthenticationStates.PasswordUpdated -> {
                 setContentView(R.layout.change_password_message_screen)
                 val button = findViewById<Button>(R.id.btn_changePassword)
                 button.setOnClickListener {

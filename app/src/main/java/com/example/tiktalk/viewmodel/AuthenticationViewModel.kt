@@ -1,11 +1,8 @@
 package com.example.tiktalk.viewmodel
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tiktalk.R
 import com.example.tiktalk.model.UserInfoModel
 import com.example.tiktalk.state.AuthenticationStates
 import com.google.firebase.auth.ktx.auth
@@ -58,7 +55,7 @@ class AuthenticationViewModel : ViewModel() {
         Firebase.auth.sendPasswordResetEmail(emailAddress)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    authenticationStates.value = AuthenticationStates.PasswordUpdate
+                    authenticationStates.value = AuthenticationStates.PasswordUpdated
                 }else {
                     authenticationStates.value = AuthenticationStates.Error
                 }
