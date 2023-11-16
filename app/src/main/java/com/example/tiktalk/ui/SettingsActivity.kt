@@ -31,13 +31,6 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
 
     }
-
-    companion object {
-        fun launch(activity : Activity) {
-            activity.startActivity(Intent(activity, SettingsActivity::class.java))
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -46,4 +39,12 @@ class SettingsActivity : AppCompatActivity() {
         }
         return true
     }
+
+    companion object {
+        fun launch(activity : Activity) {
+            activity.startActivity(Intent(activity, SettingsActivity::class.java))
+        }
+    }
+
+
 }

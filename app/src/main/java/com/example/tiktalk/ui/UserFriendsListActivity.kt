@@ -70,12 +70,6 @@ class UserFriendsListActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        fun launch (activity : Activity) {
-            activity.startActivity(Intent(activity, UserFriendsListActivity::class.java))
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -84,4 +78,11 @@ class UserFriendsListActivity : AppCompatActivity() {
         }
         return true
     }
+
+    companion object {
+        fun launch (activity : Activity) {
+            activity.startActivity(Intent(activity, UserFriendsListActivity::class.java))
+        }
+    }
+
 }
