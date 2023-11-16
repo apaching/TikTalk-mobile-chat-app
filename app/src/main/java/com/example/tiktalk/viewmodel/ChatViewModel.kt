@@ -44,6 +44,8 @@ class ChatViewModel : ViewModel() {
     fun retrieveRecentChats() {
         val objectLister = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                recentChatsList.clear()
+
                 for (data in snapshot.children) {
                     val archiveStatus = data.child("chat_information/archiveStatus").getValue(String::class.java)
                     Log.d("status", archiveStatus.toString())
