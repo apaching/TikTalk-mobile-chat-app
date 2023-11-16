@@ -50,14 +50,6 @@ class UserProfileActivity : AppCompatActivity() {
         viewModel.getCurrentUserInfo()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-        }
-        return true
-    }
 
     private fun handleState(it : AuthenticationStates) {
         when(it) {
@@ -68,6 +60,14 @@ class UserProfileActivity : AppCompatActivity() {
             else -> {}
         }
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
     }
 
     companion object {
