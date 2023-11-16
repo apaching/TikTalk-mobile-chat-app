@@ -30,6 +30,11 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_24)
 
+        binding.btnChangePassword.setOnClickListener {
+            ChangePasswordActivity.launch(this@SettingsActivity)
+            finish()
+        }
+
     }
 
     companion object {

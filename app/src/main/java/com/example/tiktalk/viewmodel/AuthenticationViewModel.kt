@@ -1,5 +1,7 @@
 package com.example.tiktalk.viewmodel
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,6 +50,19 @@ class AuthenticationViewModel : ViewModel() {
         }
 
         database.child("users_list/${auth.currentUser?.uid}/user_information").addListenerForSingleValueEvent(objectListener)
+    }
+
+    fun changeUserPassword(email : String){
+        val emailAddress = email
+
+        Firebase.auth.sendPasswordResetEmail(emailAddress)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    authenticationStates.value = AuthenticationStates.PasswordUpdate
+                }else {
+                    authenticationStates.value = AuthenticationStates.Error
+                }
+            }
     }
 
     fun signUp(email : String, password : String) {
