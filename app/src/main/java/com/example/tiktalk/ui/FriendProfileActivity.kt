@@ -63,15 +63,6 @@ class FriendProfileActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-        }
-        return true
-    }
-
     private fun handleState(it : FriendStates) {
         when(it) {
             is FriendStates.InformationRetrieved -> {
@@ -109,5 +100,14 @@ class FriendProfileActivity : AppCompatActivity() {
 
             else -> {}
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
     }
 }
