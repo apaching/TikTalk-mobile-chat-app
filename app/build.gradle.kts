@@ -60,5 +60,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
 
+    implementation("com.google.android.material:material:1.10.0")
+
     implementation("com.github.lisawray.groupie:groupie:2.10.1")
 }

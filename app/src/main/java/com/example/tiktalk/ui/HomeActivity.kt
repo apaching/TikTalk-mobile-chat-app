@@ -82,6 +82,11 @@ class HomeActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener {
             viewModel.signOut()
         }
+
+        binding.fabToFriendsList.setOnClickListener {
+            UserFriendsListActivity.launch(this@HomeActivity)
+            finish()
+        }
     }
 
     private fun handleState (it : AuthenticationStates) {

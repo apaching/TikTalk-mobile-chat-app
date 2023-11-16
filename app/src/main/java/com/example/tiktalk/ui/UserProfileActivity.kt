@@ -58,6 +58,7 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
         return true
+    }
 
     private fun handleState(it : AuthenticationStates) {
         when(it) {
