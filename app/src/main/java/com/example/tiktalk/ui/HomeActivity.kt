@@ -10,18 +10,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tiktalk.R
-import com.example.tiktalk.adapter.ChatStates
+import com.example.tiktalk.state.ChatStates
 import com.example.tiktalk.adapter.RecentChatsAdapter
 import com.example.tiktalk.databinding.ActivityHomeBinding
-import com.example.tiktalk.databinding.NavHeaderBinding
 import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.viewmodel.AuthenticationViewModel
 import com.example.tiktalk.viewmodel.ChatViewModel
-import com.google.android.material.navigation.NavigationView
 
 
 class HomeActivity : AppCompatActivity() {
@@ -120,6 +117,8 @@ class HomeActivity : AppCompatActivity() {
         when(it) {
             is ChatStates.Default -> {
                 val layoutManager = LinearLayoutManager(this)
+                layoutManager.reverseLayout = true
+                layoutManager.stackFromEnd = true
                 binding.rvChatList.layoutManager = layoutManager
 
 

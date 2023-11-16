@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.tiktalk.adapter.ChatStates
+import com.example.tiktalk.state.ChatStates
 import com.example.tiktalk.model.ChatInformationModel
 import com.example.tiktalk.model.MessageModel
+import com.example.tiktalk.model.UserInfoModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.ChildEventListener
@@ -28,13 +29,14 @@ class ChatViewModel : ViewModel() {
 
     fun getState() : LiveData<ChatStates> = chatStates
 
-    fun sendMessage(messageModel : MessageModel, friendUid : String) {
+    fun sendMessage(messageModel : MessageModel, friendUid : String, unixTimestamp : Long) {
         database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/messages").push().setValue(messageModel)
         database.child("users_list/$friendUid/chat_list/${auth.currentUser?.uid}/messages").push().setValue(messageModel)
 
         val chatInformationModel = ChatInformationModel(
             "open",
-            "unarchived"
+            "unarchived",
+            unixTimestamp
         )
 
         database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").setValue(chatInformationModel)
@@ -63,14 +65,22 @@ class ChatViewModel : ViewModel() {
             }
         }
 
-        database.child("users_list/${auth.currentUser?.uid}/chat_list").addValueEventListener(objectLister)
+        database.child("users_list/${auth.currentUser?.uid}/chat_list")
+            .orderByChild("chat_information/timeStamp")
+            .addValueEventListener(objectLister)
     }
+
+    private val _scrollToBottomEvent = MutableLiveData<Unit>()
+    val scrollToBottomEvent : LiveData<Unit>
+        get() = _scrollToBottomEvent
 
     fun retrieveConversation(friendUid: String) {
         val childListListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 snapshot.getValue<MessageModel>()?.let { messageList.add(it) }
                 chatStates.value = ChatStates.ChatAdded(messageList)
+
+                _scrollToBottomEvent.value = Unit
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -109,7 +119,8 @@ class ChatViewModel : ViewModel() {
                 if (!isUserInList) {
                     val chatInformationModel = ChatInformationModel(
                         "open",
-                        "archived"
+                        "archived",
+                        null
                     )
 
                     database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").setValue(chatInformationModel)
@@ -137,7 +148,8 @@ class ChatViewModel : ViewModel() {
                 if (!isUserInList) {
                     val chatInformationModel = ChatInformationModel(
                         "open",
-                        "archived"
+                        "archived",
+                        null
                     )
 
                     database.child("users_list/$friendUid/chat_list/${auth.currentUser?.uid}/chat_information").setValue(chatInformationModel)
@@ -151,5 +163,22 @@ class ChatViewModel : ViewModel() {
         }
 
         database.child("users_list/$friendUid/chat_list").addValueEventListener(recipientObjectListener)
+    }
+
+    fun getUserInfo (friendUid : String) {
+        val objectListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue<UserInfoModel>()
+
+                chatStates.value = ChatStates.InformationRetrieved(user)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.child("users_list/$friendUid/user_information").addListenerForSingleValueEvent(objectListener)
     }
 }

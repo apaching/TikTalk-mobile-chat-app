@@ -8,6 +8,8 @@ data class ChatInformationModel(
     val timeStatus : String? = null,
     // Archived = Won't be displayed in the user's home screen
     // Unarchived = Chat will be displayed in the user's home screen
-    val archiveStatus : String? = null
+    val archiveStatus : String? = null,
+    // Used for checking which chat should be at top
+    val timeStamp : Long? = null
 
 )
