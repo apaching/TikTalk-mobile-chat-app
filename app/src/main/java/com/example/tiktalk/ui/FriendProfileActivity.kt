@@ -55,11 +55,29 @@ class FriendProfileActivity : AppCompatActivity() {
         viewModel.getFriendUserInfo(userInfoModel)
 
         binding.btnAddFriend.setOnClickListener {
+            binding.btnAddFriend.visibility = View.GONE
+            binding.btnCancelRequest.visibility = View.VISIBLE
+
             viewModel.sendFriendRequest(auth.currentUser?.uid, userInfoModel?.uid)
         }
 
+        binding.btnAccept.setOnClickListener {
+            binding.btnAccept.visibility = View.GONE
+            binding.btnDecline.visibility = View.GONE
+            viewModel.updateFriendRequestStatus(userInfoModel?.uid, auth.currentUser?.uid, "friend")
+        }
+
+        binding.btnDecline.setOnClickListener {
+            binding.btnAddFriend.visibility = View.GONE
+            binding.btnAccept.visibility = View.GONE
+            binding.btnDecline.visibility = View.GONE
+            viewModel.updateFriendRequestStatus(userInfoModel?.uid, auth.currentUser?.uid, "not_friend")
+        }
+
         binding.btnCancelRequest.setOnClickListener {
-            viewModel.updateFriendRequestStatus(auth.currentUser?.uid, userInfoModel?.uid, "not_friend")
+            binding.btnAddFriend.visibility = View.VISIBLE
+            binding.btnCancelRequest.visibility = View.GONE
+            viewModel.updateFriendRequestStatus(auth.currentUser?.uid, userInfoModel?.uid,"not_friend")
         }
     }
 
@@ -71,32 +89,47 @@ class FriendProfileActivity : AppCompatActivity() {
                 viewModel.checkFriendshipStatus(userInfoModel)
             }
 
+            is FriendStates.RequestSent -> {
+
+            }
+
             is FriendStates.FriendshipStatusRetrieved -> {
                 // Checks if this is the first interaction of both users. The current user will
                 // be able to send a friend request to the other user
-                if (it.status.isNullOrEmpty() && it.sender.isNullOrEmpty()) {
+
+                // Also used for checking if "not_friend"
+                if ((it.status.isNullOrEmpty() && it.sender.isNullOrEmpty())
+                    || it.status == "not_friend") {
                     binding.btnAddFriend.visibility = View.VISIBLE
-                    binding.btnCancelRequest.visibility = View.GONE
                 }
 
                 // Checks if the status is pending and checks if the sender of the friend request
                 // is the current user. If that is the case, the sender will be able to see a
                 // cancel button to cancel the request.
-                if(it.status == "pending" && it.sender == auth.currentUser?.uid) {
-                    binding.btnAddFriend.visibility = View.GONE
+                if (it.status == "pending" && it.sender == auth.currentUser?.uid) {
                     binding.btnCancelRequest.visibility = View.VISIBLE
                 }
 
                 // Checks if the status is pending and checks if the sender of the friend request
                 // is not the current user. If that is the case, the current user will be able to
                 // accept or decline the request
-                if(it.status == "pending" && it.sender != auth.currentUser?.uid) {
-                    binding.btnAddFriend.text = "Accept"
-                    binding.btnCancelRequest.visibility = View.GONE
+                if (it.status == "pending" && it.sender != auth.currentUser?.uid) {
+                    binding.btnAccept.visibility = View.VISIBLE
+                    binding.btnDecline.visibility = View.VISIBLE
                 }
 
-                // Check if already a friend can delete
+                 if (it.status == "friend") {
+                     binding.btnUnfriend.visibility = View.GONE
+                     binding.btnAccept.visibility = View.GONE
+                     binding.btnDecline.visibility = View.GONE
+                }
+
+                if (it.status == "not_friend") {
+                    binding.btnAddFriend.visibility = View.VISIBLE
+                    binding.btnUnfriend.visibility = View.GONE
+                }
             }
+
 
             else -> {}
         }

@@ -9,7 +9,7 @@ sealed class FriendStates {
     data class FriendsRetrieved(val list : ArrayList<String>) : FriendStates()
     data class InformationRetrieved(val user : UserInfoModel?) : FriendStates()
     data class FriendshipStatusRetrieved(val status : String?, val sender : String?) : FriendStates()
-    data object RequestSent : FriendStates()
+    data class RequestSent(val status : String?, val sender : String?) : FriendStates()
     data class SearchFinished (val results : ArrayList<UserInfoModel>) : FriendStates()
 
 }

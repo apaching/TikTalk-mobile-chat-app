@@ -47,7 +47,7 @@ class FriendsAdapter(val context : Context, val friendsList : ArrayList<String>?
 
                     binding.tvUsername.text = userInfoModel?.name.toString()
 
-                    binding.btnAddMessage.setOnClickListener {
+                    binding.btnNewMessage.setOnClickListener {
                         val intent = Intent(context, ChatActivity::class.java)
                         intent.putExtra("friend_uid", friendUid)
                         context.startActivity(intent)

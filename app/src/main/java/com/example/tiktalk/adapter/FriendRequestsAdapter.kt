@@ -3,6 +3,7 @@ package com.example.tiktalk.adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.provider.ContactsContract.Profile
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tiktalk.databinding.ItemFriendRequestBinding
 import com.example.tiktalk.model.FriendModel
+import com.example.tiktalk.model.UserInfoModel
+import com.example.tiktalk.ui.FriendProfileActivity
 import com.example.tiktalk.ui.FriendRequestsActivity
 import com.example.tiktalk.ui.SignupActivity
 import com.example.tiktalk.viewmodel.FriendsViewModel
@@ -18,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
 
 class FriendRequestsAdapter(val context : Context, val friendRequestsList : ArrayList<FriendModel>?, val viewModel : FriendsViewModel) : RecyclerView.Adapter<FriendRequestsAdapter.ViewHolder>() {
@@ -44,8 +48,15 @@ class FriendRequestsAdapter(val context : Context, val friendRequestsList : Arra
             val objectListenerOne = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val name = snapshot.child("name").getValue(String::class.java)
-
                     binding.tvUsername.text = name
+
+
+                    val userInfoModel = snapshot.getValue<UserInfoModel>()
+                    binding.ll.setOnClickListener {
+                        val intent = Intent(context, FriendProfileActivity::class.java)
+                        intent.putExtra("user_info_model", userInfoModel)
+                        context.startActivity(intent)
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
