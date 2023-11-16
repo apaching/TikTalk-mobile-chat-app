@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
 
                     R.id.nav_friend_requests -> FriendRequestsActivity.launch(this@HomeActivity)
 
-                    R.id.nav_settings -> ChatActivity.launch(this@HomeActivity)
+                    R.id.nav_settings -> SettingsActivity.launch(this@HomeActivity)
 
 
                     else -> false

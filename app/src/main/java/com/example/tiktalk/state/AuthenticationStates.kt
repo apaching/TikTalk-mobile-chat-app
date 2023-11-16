@@ -10,6 +10,7 @@ sealed class   AuthenticationStates {
     data object SignedIn : AuthenticationStates()
     data object SignedUp : AuthenticationStates()
     data object SignedOut : AuthenticationStates()
+    data object PasswordUpdate  : AuthenticationStates()
     data object Error : AuthenticationStates()
 
 }
