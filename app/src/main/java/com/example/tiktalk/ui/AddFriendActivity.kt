@@ -75,6 +75,7 @@ class AddFriendActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 HomeActivity.launch(this@AddFriendActivity)
+                finish()
             }
         }
         return true
