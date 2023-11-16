@@ -2,6 +2,7 @@ package com.example.tiktalk.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -83,20 +84,18 @@ class LoginActivity : AppCompatActivity() {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.isUnderlineText = true
-                ds.typeface = Typeface.DEFAULT_BOLD
+                ds.isUnderlineText = false
+                ds.color = Color.BLACK
+
             }
         }
 
         val startIndex = fullText.indexOf(linkText, 0, true)
 
-        val colorYellow = ContextCompat.getColor(this@LoginActivity, R.color.white)
-        val colorWhite = ContextCompat.getColor(this@LoginActivity, R.color.white)
-
         return SpannableString(fullText).apply{
             setSpan(clickableSpan, startIndex, startIndex + linkText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            setSpan(ForegroundColorSpan(colorYellow), startIndex, startIndex + linkText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            setSpan(BackgroundColorSpan(colorWhite), startIndex, startIndex + linkText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            setSpan(ForegroundColorSpan(colorYellow), startIndex, startIndex + linkText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            setSpan(BackgroundColorSpan(colorWhite), startIndex, startIndex + linkText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         }
     }

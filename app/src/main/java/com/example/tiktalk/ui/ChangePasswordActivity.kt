@@ -32,7 +32,9 @@ class ChangePasswordActivity : AppCompatActivity() {
                  val emailAddress = etEmail.text.toString()
 
                 viewModel.changeUserPassword(emailAddress)
-
+            }
+            btnCancel.setOnClickListener {
+                finish()
             }
         }
 
