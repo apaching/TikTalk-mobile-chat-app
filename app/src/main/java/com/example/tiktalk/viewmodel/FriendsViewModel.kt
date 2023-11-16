@@ -59,7 +59,10 @@ class FriendsViewModel : ViewModel() {
                     )
 
                     database.child("users_list/$senderId/friends_list/$recipientId").setValue(friendModel)
+
                 }
+
+                friendStates.value = FriendStates.FriendsRetrieved(friendsList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -95,6 +98,8 @@ class FriendsViewModel : ViewModel() {
                     )
 
                     database.child("users_list/$recipientId/friends_list/$senderId").setValue(friendModel)
+
+                    friendStates.value = FriendStates.FriendsRetrieved(friendsList)
                 }
             }
 
@@ -106,7 +111,6 @@ class FriendsViewModel : ViewModel() {
 
         database.child("users_list/$recipientId/friends_list").addListenerForSingleValueEvent(recipientObjectListener)
 
-        friendStates.value = FriendStates.RequestSent
     }
 
     // Gets the list of friend requests of the user
@@ -218,7 +222,6 @@ class FriendsViewModel : ViewModel() {
                 TODO("Not yet implemented")
             }
         }
-
         database.child("users_list/$recipientId/friends_list").addListenerForSingleValueEvent(recipientObjectListener)
     }
 

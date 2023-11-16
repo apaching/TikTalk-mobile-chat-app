@@ -29,7 +29,7 @@ class FriendSearchAdapter(val context : Context, val resultsList : ArrayList<Use
     class ViewHolder(val binding : EachUserBinding, val context : Context) : RecyclerView.ViewHolder(binding.root) {
         fun bind(result : UserInfoModel, position : Int) {
             binding.tvUsername.text = result.name
-            binding.btnAddMessage.visibility = View.GONE
+            binding.btnNewMessage.visibility = View.GONE
 
             binding.ll.setOnClickListener {
                 val intent = Intent(context, FriendProfileActivity::class.java)
