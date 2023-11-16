@@ -32,19 +32,18 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                HomeActivity.launch(this@SettingsActivity)
-                finish()
-            }
-        }
-        return true
-    }
-
     companion object {
         fun launch(activity : Activity) {
             activity.startActivity(Intent(activity, SettingsActivity::class.java))
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
     }
 }

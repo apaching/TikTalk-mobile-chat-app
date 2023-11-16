@@ -71,16 +71,6 @@ class AddFriendActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                HomeActivity.launch(this@AddFriendActivity)
-                finish()
-            }
-        }
-        return true
-    }
-
     private fun handleState(it : FriendStates) {
         when(it) {
             is FriendStates.SearchFinished -> {
@@ -90,6 +80,15 @@ class AddFriendActivity : AppCompatActivity() {
 
             else -> {}
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
     }
 
     companion object {

@@ -53,16 +53,6 @@ class FriendRequestsActivity : AppCompatActivity() {
         viewModel.getFriendRequestList()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                HomeActivity.launch(this@FriendRequestsActivity)
-                finish()
-            }
-        }
-        return true
-    }
-
     private fun handleState(it : FriendStates) {
         when(it) {
             is FriendStates.FriendRequestsRetrieved -> {
@@ -78,6 +68,15 @@ class FriendRequestsActivity : AppCompatActivity() {
 
             else -> {}
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
     }
 
     companion object {
