@@ -7,6 +7,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.tiktalk.R
 import com.example.tiktalk.databinding.FriendProfileBinding
 import com.example.tiktalk.model.UserInfoModel
@@ -23,6 +25,8 @@ class FriendProfileActivity : AppCompatActivity() {
     private lateinit var binding : FriendProfileBinding
     private lateinit var viewModel : FriendsViewModel
 
+    private lateinit var customTitle : TextView
+
     private var userInfoModel : UserInfoModel? = null
 
     private var auth = Firebase.auth
@@ -33,7 +37,7 @@ class FriendProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val customTitle = TextView(this@FriendProfileActivity)
+        customTitle = TextView(this@FriendProfileActivity)
         customTitle.text = getString(R.string.search)
         customTitle.setTextAppearance(R.style.ActionBarTitleText)
 
@@ -86,6 +90,16 @@ class FriendProfileActivity : AppCompatActivity() {
             is FriendStates.InformationRetrieved -> {
                 binding.tvFriendUsername.text = it.user?.name
                 binding.tvAboutMe.text = it.user?.aboutUser
+
+                customTitle.text = it.user?.name
+
+                if (it.user?.imageUrl != null) {
+                    Glide.with(this@FriendProfileActivity)
+                        .load(it.user.imageUrl)
+                        .apply(RequestOptions().centerCrop().override(150, 150))
+                        .into(binding.ivFriendProfile)
+                }
+
                 viewModel.checkFriendshipStatus(userInfoModel)
             }
 

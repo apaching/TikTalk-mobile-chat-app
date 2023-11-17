@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-
+import com.google.firebase.storage.ktx.storage
 
 
 class AuthenticationViewModel : ViewModel() {
@@ -20,6 +20,7 @@ class AuthenticationViewModel : ViewModel() {
     private val authenticationStates = MutableLiveData<AuthenticationStates>()
 
     private var auth = Firebase.auth
+    private var storage = Firebase.storage.reference
     private var database = Firebase.database.reference
 
     fun getState() : LiveData<AuthenticationStates> = authenticationStates
@@ -106,5 +107,37 @@ class AuthenticationViewModel : ViewModel() {
         )
 
         databaseRef.setValue(userInfoModel)
+    }
+
+    fun editUserRecord(img : ByteArray, newName : String?, newAboutMe : String?) {
+        val storageReference = storage.child("users_profile_pic").child(newName.toString())
+
+
+        storageReference.putBytes(img).addOnSuccessListener {
+            storageReference.downloadUrl.addOnSuccessListener {
+                val objectListener = object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val oldUserInfoModel = snapshot.getValue<UserInfoModel>()
+                        val newUserInfoModel = UserInfoModel(
+                            oldUserInfoModel?.uid,
+                            newName,
+                            oldUserInfoModel?.email,
+                            it.toString(),
+                            newAboutMe
+                        )
+
+                        database.child("users_list/${auth.currentUser?.uid}/user_information").setValue(newUserInfoModel)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        //
+                    }
+                }
+
+                database.child("users_list/${auth.currentUser?.uid}/user_information").addValueEventListener(objectListener)
+
+                authenticationStates.value = AuthenticationStates.EditSuccess
+            }
+        }
     }
 }

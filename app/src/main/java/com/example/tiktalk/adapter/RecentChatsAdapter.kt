@@ -6,6 +6,8 @@ import android.os.Message
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.tiktalk.databinding.EachChatBinding
 import com.example.tiktalk.model.MessageModel
 import com.example.tiktalk.ui.ChatActivity
@@ -88,6 +90,14 @@ class RecentChatsAdapter(val context : Context, val chatList : ArrayList<String>
             val objectListenerTwo  = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     binding.tvUsername.text = snapshot.child("name").getValue(String::class.java)
+
+                    val imageUrl = snapshot.child("imageUrl").getValue(String::class.java)
+                    if (imageUrl != null) {
+                        Glide.with(context)
+                            .load(imageUrl)
+                            .apply(RequestOptions().centerCrop().override(150, 150))
+                            .into(binding.ivUsersImg)
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {

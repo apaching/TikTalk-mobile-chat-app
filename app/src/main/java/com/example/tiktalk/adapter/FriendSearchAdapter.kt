@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.tiktalk.databinding.EachUserBinding
 import com.example.tiktalk.model.UserInfoModel
 import com.example.tiktalk.ui.FriendProfileActivity
@@ -30,6 +32,13 @@ class FriendSearchAdapter(val context : Context, val resultsList : ArrayList<Use
         fun bind(result : UserInfoModel, position : Int) {
             binding.tvUsername.text = result.name
             binding.btnNewMessage.visibility = View.GONE
+
+            if(result.imageUrl != null) {
+                Glide.with(context)
+                    .load(result.imageUrl)
+                    .apply(RequestOptions().centerCrop().override(150, 150))
+                    .into(binding.ivUsersImg)
+            }
 
             binding.ll.setOnClickListener {
                 val intent = Intent(context, FriendProfileActivity::class.java)
