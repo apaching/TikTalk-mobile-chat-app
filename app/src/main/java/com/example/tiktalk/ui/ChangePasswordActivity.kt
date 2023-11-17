@@ -20,8 +20,6 @@ class ChangePasswordActivity : AppCompatActivity() {
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         viewModel = AuthenticationViewModel()
         viewModel.getState().observe(this@ChangePasswordActivity){
             handleState(it)
@@ -44,7 +42,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         when(it){
             is AuthenticationStates.ResetPasswordEmailSent -> {
                 setContentView(R.layout.change_password_message_screen)
-                val button = findViewById<Button>(R.id.btn_changePassword)
+                val button = findViewById<Button>(R.id.btn_send_email)
                 button.setOnClickListener {
                     finish()
 

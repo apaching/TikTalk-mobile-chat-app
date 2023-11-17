@@ -8,7 +8,7 @@
     android:background="@color/blue">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_changePassword"
+        android:id="@+id/btn_change_password"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/bg_each_chat_outline"

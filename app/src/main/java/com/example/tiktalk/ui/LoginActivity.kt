@@ -47,6 +47,14 @@ class LoginActivity : AppCompatActivity() {
 
             movementMethod = LinkMovementMethod.getInstance()
         }
+
+        binding.tvForgotPassword.apply {
+            text = addClickableLink("Forgot Password", "Forgot Password") {
+                ForgotPasswordActivity.launch(this@LoginActivity)
+            }
+
+            movementMethod = LinkMovementMethod.getInstance()
+        }
     }
 
     override fun onStart() {
