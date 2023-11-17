@@ -147,11 +147,11 @@ class FriendsViewModel : ViewModel() {
     }
 
     fun getFriendsList() {
-        //
-        friendsList.clear()
-
         val listListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                friendsList.clear()
+
+
                 for (data in snapshot.children) {
                     val status = data.child("status").getValue(String::class.java)
 
