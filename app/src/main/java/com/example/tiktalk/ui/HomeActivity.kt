@@ -146,7 +146,6 @@ class HomeActivity : AppCompatActivity() {
                 layoutManager.stackFromEnd = true
                 binding.rvChatList.layoutManager = layoutManager
 
-
                 adapter = RecentChatsAdapter(this@HomeActivity, it.data)
                 binding.rvChatList.adapter = adapter
             }

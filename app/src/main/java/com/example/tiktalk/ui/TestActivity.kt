@@ -22,7 +22,7 @@ class TestActivity : AppCompatActivity() {
         viewModel = FriendsViewModel()
 
         binding.btn.setOnClickListener {
-            viewModel.sendFriendRequest(auth.currentUser?.uid, "BEmGaNYKszLzD3Dx2woRKIDQVJ22")
+            viewModel.sendFriendRequest(auth.currentUser?.uid, "NEKgiqew3kTbX8lJbDdqNSkAji82")
         }
 
         binding.btn2.setOnClickListener {

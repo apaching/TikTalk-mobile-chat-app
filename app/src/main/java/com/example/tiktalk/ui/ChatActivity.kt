@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.widget.TextView
@@ -47,8 +48,11 @@ class ChatActivity : AppCompatActivity() {
             handleState(it)
         }
 
-        chatViewModel.getUserInfo(friendUid.toString())
+        Log.d("Current User: ", auth.currentUser?.uid.toString())
+        Log.d("Friend: ", friendUid.toString())
 
+        chatViewModel.getUserInfo(friendUid.toString())
+        chatViewModel.updateReadStatus(friendUid.toString())
         chatViewModel.newMessage(friendUid.toString())
         chatViewModel.retrieveConversation(friendUid.toString())
 
@@ -109,6 +113,12 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        chatViewModel.updateReadStatus(friendUid)
+    }
+
     private fun handleState(it : ChatStates) {
         when(it) {
             is ChatStates.ChatAdded -> {
@@ -119,14 +129,6 @@ class ChatActivity : AppCompatActivity() {
             is ChatStates.InformationRetrieved -> {
                 customTitle.text = it.data?.name.toString()
             }
-
-            else -> {}
-        }
-    }
-
-    private fun handleState(it : AuthenticationStates) {
-        when(it) {
-
 
             else -> {}
         }
