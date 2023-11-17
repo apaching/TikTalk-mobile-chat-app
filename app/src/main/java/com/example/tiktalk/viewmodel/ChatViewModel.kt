@@ -33,14 +33,49 @@ class ChatViewModel : ViewModel() {
         database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/messages").push().setValue(messageModel)
         database.child("users_list/$friendUid/chat_list/${auth.currentUser?.uid}/messages").push().setValue(messageModel)
 
-        val chatInformationModel = ChatInformationModel(
+        // Read = False, 'di pa na s-seen
+        val chatInformationModelOne = ChatInformationModel(
             "open",
             "unarchived",
-            unixTimestamp
+            unixTimestamp,
+            false
         )
 
-        database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").setValue(chatInformationModel)
-        database.child("users_list/$friendUid/chat_list/${auth.currentUser?.uid}/chat_information").setValue(chatInformationModel)
+        // Read = true, na seen na
+        val chatInformationModelTwo = ChatInformationModel(
+            "open",
+            "unarchived",
+            unixTimestamp,
+            true
+        )
+
+        database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").setValue(chatInformationModelTwo)
+        database.child("users_list/$friendUid/chat_list/${auth.currentUser?.uid}/chat_information").setValue(chatInformationModelOne)
+    }
+
+    fun updateReadStatus(friendUid : String?) {
+        val objectListenerOne = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val chatInformationModel = snapshot.getValue<ChatInformationModel>()
+
+                val updatedChatInformationModel = ChatInformationModel(
+                    chatInformationModel?.timeStatus,
+                    chatInformationModel?.archiveStatus,
+                    chatInformationModel?.timeStamp,
+                    true
+                )
+
+                database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").setValue(updatedChatInformationModel)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").addListenerForSingleValueEvent(objectListenerOne)
     }
 
     fun retrieveRecentChats() {
@@ -122,7 +157,6 @@ class ChatViewModel : ViewModel() {
                         "archived",
                         null
                     )
-
                     database.child("users_list/${auth.currentUser?.uid}/chat_list/$friendUid/chat_information").setValue(chatInformationModel)
                 }
             }

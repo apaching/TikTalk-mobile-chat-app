@@ -10,6 +10,8 @@ data class ChatInformationModel(
     // Unarchived = Chat will be displayed in the user's home screen
     val archiveStatus : String? = null,
     // Used for checking which chat should be at top
-    val timeStamp : Long? = null
+    val timeStamp : Long? = null,
+    // Used for checking if the user has read it or not
+    val read : Boolean? = null
 
 )

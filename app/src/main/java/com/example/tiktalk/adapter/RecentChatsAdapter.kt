@@ -2,12 +2,15 @@ package com.example.tiktalk.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Message
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.tiktalk.R
 import com.example.tiktalk.databinding.EachChatBinding
 import com.example.tiktalk.model.MessageModel
 import com.example.tiktalk.ui.ChatActivity
@@ -107,6 +110,23 @@ class RecentChatsAdapter(val context : Context, val chatList : ArrayList<String>
             }
 
             database.child("users_list/$userId/user_information").addValueEventListener(objectListenerTwo)
+
+            val objectListenerThree = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val readStatus = snapshot.child("read").getValue(Boolean::class.java)
+                    if (readStatus == false) {
+                        val customFont: Typeface? = ResourcesCompat.getFont(context, R.font.montserrat_bold)
+                        binding.tvPreviewMessage.typeface = customFont
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+
+            database.child("users_list/${auth.currentUser?.uid}/chat_list/$userId/chat_information").addValueEventListener(objectListenerThree)
         }
     }
 }
