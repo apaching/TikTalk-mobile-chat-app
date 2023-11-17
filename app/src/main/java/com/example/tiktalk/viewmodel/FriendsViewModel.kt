@@ -147,6 +147,7 @@ class FriendsViewModel : ViewModel() {
     }
 
     fun getFriendsList() {
+        //
         friendsList.clear()
 
         val listListener = object : ValueEventListener {
