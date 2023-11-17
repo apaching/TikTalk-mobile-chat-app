@@ -27,6 +27,7 @@
     <string name="note">Note</string>
     <string name="sample_note">Duis ultrices consequat tincidunt. Nulla ut magna imperdiet, luctus sem vel, molestie arcu.</string>
     <string name="edit">Edit Profile</string>
+    <string name="confirm_edit">Edit</string>
     <string name="confirm">Confirm</string>
     <string name="delete">Delete</string>
     <string name="no_friend_request">No Friend Requests</string>

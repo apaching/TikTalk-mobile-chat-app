@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.tiktalk.databinding.ItemFriendRequestBinding
 import com.example.tiktalk.model.FriendModel
 import com.example.tiktalk.model.UserInfoModel
@@ -49,6 +51,14 @@ class FriendRequestsAdapter(val context : Context, val friendRequestsList : Arra
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val name = snapshot.child("name").getValue(String::class.java)
                     binding.tvUsername.text = name
+
+                    val imageUrl = snapshot.child("imageUrl").getValue(String::class.java)
+                    if (imageUrl != null) {
+                        Glide.with(context)
+                            .load(imageUrl)
+                            .apply(RequestOptions().centerCrop().override(150, 150))
+                            .into(binding.ivRoundedImage)
+                    }
 
 
                     val userInfoModel = snapshot.getValue<UserInfoModel>()

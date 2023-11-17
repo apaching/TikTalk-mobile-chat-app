@@ -11,6 +11,7 @@ sealed class   AuthenticationStates {
     data object SignedUp : AuthenticationStates()
     data object SignedOut : AuthenticationStates()
     data object ResetPasswordEmailSent  : AuthenticationStates()
+    data object EditSuccess : AuthenticationStates()
     data object Error : AuthenticationStates()
 
 }

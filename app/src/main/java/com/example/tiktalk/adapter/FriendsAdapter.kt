@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.tiktalk.databinding.EachUserBinding
 import com.example.tiktalk.databinding.ItemFriendRequestBinding
 import com.example.tiktalk.model.FriendModel
@@ -46,6 +48,13 @@ class FriendsAdapter(val context : Context, val friendsList : ArrayList<String>?
                     val userInfoModel = snapshot.getValue<UserInfoModel>()
 
                     binding.tvUsername.text = userInfoModel?.name.toString()
+
+                    if (userInfoModel?.imageUrl != null) {
+                        Glide.with(context)
+                            .load(userInfoModel.imageUrl)
+                            .apply(RequestOptions().centerCrop().override(150, 150))
+                            .into(binding.ivUsersImg)
+                    }
 
                     binding.btnNewMessage.setOnClickListener {
                         val intent = Intent(context, ChatActivity::class.java)

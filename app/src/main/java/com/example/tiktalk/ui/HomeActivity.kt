@@ -9,10 +9,13 @@ import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.tiktalk.R
 import com.example.tiktalk.state.ChatStates
 import com.example.tiktalk.adapter.RecentChatsAdapter
@@ -21,6 +24,7 @@ import com.example.tiktalk.state.AuthenticationStates
 import com.example.tiktalk.viewmodel.AuthenticationViewModel
 import com.example.tiktalk.viewmodel.ChatViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class HomeActivity : AppCompatActivity() {
@@ -105,10 +109,24 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        authenticationViewModel.getCurrentUserInfo()
+        chatViewModel.retrieveRecentChats()
+    }
+
     private fun handleState (it : AuthenticationStates) {
         when(it) {
             is AuthenticationStates.Default -> {
                 binding.navView.getHeaderView(0).findViewById<TextView>(R.id.tv_username).text = it.user?.name.toString()
+
+
+                if (it.user?.imageUrl != null) {
+                    Glide.with(this@HomeActivity)
+                        .load(it.user?.imageUrl)
+                        .apply(RequestOptions().centerCrop().override(150, 150))
+                        .into(binding.navView.getHeaderView(0).findViewById<CircleImageView>(R.id.iv_profile))
+                }
             }
 
             is AuthenticationStates.SignedOut -> {
